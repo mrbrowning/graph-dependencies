@@ -97,10 +97,10 @@ def write_csv(
         logging.info('Wrote node file: {}'.format(filename))
 
     for edges_file, edges, columns in (
-            (class_class_file, class_class_edges, ('class_id', 'class_id')),
+            (class_class_file, class_class_edges, ('class1_id', 'class2_id')),
             (class_package_file, class_package_edges, ('class_id', 'package_id')),
             (package_class_file, package_class_edges, ('package_id', 'class_id')),
-            (package_package_file, package_package_edges, ('package_id', 'package_id'))):
+            (package_package_file, package_package_edges, ('package1_id', 'package2_id'))):
 
         with open(edges_file, 'w', newline='') as f:
             writer = csv.writer(f, dialect='unix', quoting=csv.QUOTE_MINIMAL)
