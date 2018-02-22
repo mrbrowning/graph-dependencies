@@ -47,9 +47,6 @@ class DependencyTrieNode:
         self.children[child.value] = child
 
     def _add_dependency(self, dependency):
-        def is_class(d):
-            return d.qualified_value[-1][0].isupper()
-
         self.dependencies[dependency.qualified_value] = dependency
 
     def add_dependency(self, dependency):
@@ -128,9 +125,6 @@ def _get_path_from_filename(filename):
 
 
 def from_file_dependencies(dependencies):
-    def is_class(dep):
-        return dep.split('/')[-1].endswith('.java')
-
     trie = DependencyTrie()
 
     for depender, dependents in dependencies.items():
