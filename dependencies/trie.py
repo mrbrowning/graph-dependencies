@@ -97,7 +97,8 @@ class DependencyTrieIterator:
 
         return (
             next_node.qualified_value,
-            tuple([n.qualified_value for n in next_node.dependencies.values()])
+            tuple([n.qualified_value for n in next_node.dependencies.values()]),
+            tuple([n.qualified_value for n in next_node.children.values()]),
         )
 
 

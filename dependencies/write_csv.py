@@ -37,8 +37,10 @@ def _get_records(trie):
     class_package_edges = set()
     package_class_edges = set()
     package_package_edges = set()
+    class_child_edges = set()
+    package_child_edges = set()
 
-    for depender, dependents in trie:
+    for depender, dependents, children in trie:
         if not depender:
             continue
         is_depender_class = _is_class(depender)
@@ -59,6 +61,17 @@ def _get_records(trie):
             else:
                 package_package_edges.add(edge)
 
+        for c in children:
+            is_child_class = _is_class(c)
+
+            child_dict = classes if is_child_class else packages
+            edge = (depender_dict[depender], child_dict[c])
+
+            if is_child_class:
+                class_child_edges.add(edge)
+            else:
+                package_child_edges.add(edge)
+
     return (
         classes,
         packages,
@@ -66,6 +79,8 @@ def _get_records(trie):
         class_package_edges,
         package_class_edges,
         package_package_edges,
+        class_child_edges,
+        package_child_edges,
     )
 
 
@@ -76,14 +91,18 @@ def write_csv(
         class_class_file,
         class_package_file,
         package_class_file,
-        package_package_file):
+        package_package_file,
+        class_child_file,
+        package_child_file):
     (
         classes,
         packages,
         class_class_edges,
         class_package_edges,
         package_class_edges,
-        package_package_edges
+        package_package_edges,
+        class_child_edges,
+        package_child_edges
     ) = _get_records(trie)
 
     for filename, entities in [(classes_file, classes), (packages_file, packages)]:
@@ -100,7 +119,9 @@ def write_csv(
             (class_class_file, class_class_edges, ('class1_id', 'class2_id')),
             (class_package_file, class_package_edges, ('class_id', 'package_id')),
             (package_class_file, package_class_edges, ('package_id', 'class_id')),
-            (package_package_file, package_package_edges, ('package1_id', 'package2_id'))):
+            (package_package_file, package_package_edges, ('package1_id', 'package2_id')),
+            (class_child_file, class_child_edges, ('package_id', 'class_id')),
+            (package_child_file, package_child_edges, ('package1_id', 'package2_id'))):
 
         with open(edges_file, 'w', newline='') as f:
             writer = csv.writer(f, dialect='unix', quoting=csv.QUOTE_MINIMAL)

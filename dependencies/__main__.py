@@ -13,7 +13,9 @@ def main(argv):
         class_class_file,
         class_package_file,
         package_class_file,
-        package_package_file
+        package_package_file,
+        class_child_file,
+        package_child_file,
     ) = argv
 
     dependencies = read_xml.get_dependencies(dependencies_file)
@@ -26,7 +28,9 @@ def main(argv):
         class_class_file,
         class_package_file,
         package_class_file,
-        package_package_file
+        package_package_file,
+        class_child_file,
+        package_child_file,
     )
 
 
