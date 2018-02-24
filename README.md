@@ -6,6 +6,8 @@ This project takes an XML file from IntelliJ describing a project's package- and
 Getting Started
 ---------------
 
+This project assumes that a Python 3.x interpreter is available on your system under the alias `python3` and that you've installed Neo4j via Homebrew in macOS. If the latter doesn't hold, you should alter the `NEO4J_IMPORT_DIR` in `Makefile`.
+
 To execute the complete process of ingesting your dependencies into Neo4j, just run:
 
     make all
